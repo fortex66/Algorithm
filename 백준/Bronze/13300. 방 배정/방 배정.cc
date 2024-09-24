@@ -17,7 +17,7 @@ int main() {
 
     for (int i = 1; i < 14; i++) {
         if (arr[i] > 0 && arr[i] <= K) result++;
-        else result += arr[i] / K + arr[i] % K;
+        else result += (arr[i] / K) + ((arr[i] % K != 0) ? 1 : 0);
     }
 
     cout << result;
