@@ -65,18 +65,18 @@ int main(void) {
 			int x = cctv[i].X;
 			int y = cctv[i].Y;
 			// cctv 종류별 방향 증감
-			if (board1[x][y] == 1) {
+			if (board2[x][y] == 1) {
 				upd(x, y, dir);
 			}
-			else if (board1[x][y] == 2) {
+			else if (board2[x][y] == 2) {
 				upd(x, y, dir);     // 0, 1, 2, 3
 				upd(x, y, dir + 2); // 2, 3, 4, 5 -> upd안에 %4로 2, 3, 0, 1로 바뀜
 			}
-			else if (board1[x][y] == 3) {
+			else if (board2[x][y] == 3) {
 				upd(x, y, dir);   // 0, 1, 2, 3
 				upd(x, y, dir+1); // 1, 2, 3, 0
 			}
-			else if (board1[x][y] == 4) {
+			else if (board2[x][y] == 4) {
 				upd(x, y, dir);   // 0, 1, 2, 3
 				upd(x, y, dir+1); // 1, 2, 3, 0
 				upd(x, y, dir+2); // 2, 3, 0, 1
