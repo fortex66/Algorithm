@@ -10,12 +10,12 @@ int n, m;
 void func(int k) {
 	if (k == m) {
 		for (int i = 0; i < m; i++)
-			cout << ans[i] << ' ';
+			cout << arr[ans[i]] << ' ';
 		cout << '\n';
 		return;
 	}
 	for (int i = 0; i < n; i++) {
-		ans[k] = arr[i];
+		ans[k] = i;
 		func(k + 1);
 	}
 }
