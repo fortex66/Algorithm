@@ -40,8 +40,7 @@ void shortest_dist(int island[][102],int dist[][102], int x, int y, int n) {
             if (island[nx][ny] == island[x][y]) continue;
             if (island[nx][ny] != 0 && island[nx][ny] != island[x][y]){
                 ans = min(ans, dist[cur.X][cur.Y]);
-                while (!Q.empty()) Q.pop();
-                break;
+                return;
             }
             Q.push({ nx,ny });
             dist[nx][ny] = dist[cur.X][cur.Y] + 1;
