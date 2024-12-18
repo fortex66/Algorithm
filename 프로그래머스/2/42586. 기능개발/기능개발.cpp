@@ -11,7 +11,7 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
     while(1){
         if(idx==n) break;
         int cnt = 0;
-        for(int i = 0; i < n; i++){
+        for(int i = idx; i < n; i++){
             progresses[i] += speeds[i];
         }
         for(int i = idx; i < n; i++){
