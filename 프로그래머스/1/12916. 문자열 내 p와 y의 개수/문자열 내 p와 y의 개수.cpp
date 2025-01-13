@@ -4,26 +4,12 @@ using namespace std;
 
 bool solution(string s)
 {
-    bool answer = true;
-    int count1 = 0;
-    int count2 = 0;
-    for(int i = 0; i < s.length(); i++){
-        if(s[i] == 'p'){
-            count1++;
-        } else if(s[i] == 'P'){
-            count1++;
-        } else if(s[i] == 'y'){
-            count2++;
-        } else if(s[i] == 'Y'){
-            count2++;
-        }
+    // 대소문자 구분없이 p와 y의 개수가 같으면 True 아니면 False
+    int cnt = 0;
+    for (char a : s) {
+        if(a == 'p' || a == 'P') cnt++;
+        else if(a == 'y' || a == 'Y') cnt--;
     }
-    if(count1 == 0 && count2 == 0){
-        answer = true;
-    } else if(count1 == count2){
-        answer = true;
-    } else {
-        answer = false;
-    }
-    return answer;
+    
+    return (cnt == 0 ? true : false);
 }
