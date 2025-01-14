@@ -26,7 +26,7 @@ int main() {
 
 	while (st <= en) {
 		ll mid = (st + en) / 2;
-		int cnt = 0;
+		ll cnt = 0;
 		for (int i = 0; i < K; i++) {
 			cnt += V[i] / mid;
 		}
