@@ -1,121 +1,104 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#define X first
-#define Y second
+#include<iostream>
+#include<queue>
 
 using namespace std;
 
-int dx[4] = { 0,1,0,-1 };
-int dy[4] = { 1,0,-1,0 };
+#define X first
+#define Y second
 
-// 빙하 녹이기
-void melting(int board[][302] ,queue<pair<int,int> > & ice, int n, int m) {
-	int tmp[302][302] = { 0 };
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+int N, M;
+int board[301][301];
+queue<pair<int, int> > ice;
+
+void melting() {
+	int tmp[301][301] = { 0 };
 	while (!ice.empty()) {
 		auto cur = ice.front(); ice.pop();
 		for (int dir = 0; dir < 4; dir++) {
 			int nx = cur.X + dx[dir];
 			int ny = cur.Y + dy[dir];
-			if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+			if (nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
 			if (board[nx][ny] == 0) {
-				if (board[cur.X][cur.Y] > 0) {
-					tmp[cur.X][cur.Y]++;
-				}
+				if (board[cur.X][cur.Y] > 0) tmp[cur.X][cur.Y]++;
 				else continue;
 			}
 		}
 	}
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			board[i][j] = max(0,board[i][j] - tmp[i][j]);
+	// 녹은게 영향을 미치면 안되므로 아래에서 빼준다.
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			board[i][j] = max(0, board[i][j] - tmp[i][j]);
 		}
 	}
 }
 
-// 빙산 카운트(dfs)
-void dfs_iceberg(int board[][302], bool vis[][302], int n, int m, int x, int y) {
-	vis[x][y] = true;
+// 빙산 카운팅
+void iceberg(bool visit[][301], int x, int y) {
+	visit[x][y] = true;
 	for (int dir = 0; dir < 4; dir++) {
 		int nx = x + dx[dir];
 		int ny = y + dy[dir];
-		if (nx < 0 || nx >= n || ny < 0 || ny >= m || vis[nx][ny]) continue;
+		if (nx < 0 || nx >= N || ny < 0 || ny >= M || visit[nx][ny]) continue;
 		if (board[nx][ny] > 0) {
-			dfs_iceberg(board, vis, n, m, nx, ny);
+			iceberg(visit, nx, ny);
 		}
 	}
 }
-
 
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
+	
+	cin >> N >> M;
 
-	int T; // 테스트 케이스
-	//cin >> T;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			cin >> board[i][j];
+		}
+	}
 
-	//while (T--) {
+	int year = 1;
+	while (1) {
 
-		int year = 1;
-		int N, M;
-		int board[302][302] = {0};
-		
-		cin >> N >> M;
+		bool visit[301][301] = { false };
+
 
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-				cin >> board[i][j];
+				if (board[i][j] > 0) {
+					ice.push({ i,j });
+				}
 			}
 		}
 
-		while (1) {
-			
-			queue<pair<int, int> > ice; // 빙산의 좌표
-			bool vis[302][302] = { false };
+		// 빙산 녹이기
+		melting();
 
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < M; j++) {
-					if (board[i][j] > 0) {
-						ice.push({ i,j });
-					}
+		int ice_cnt = 0;
+
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				if (!visit[i][j] && board[i][j] > 0) {
+					iceberg(visit, i, j);
+					ice_cnt++;
 				}
 			}
+		}
 
-			melting(board, ice, N, M); // 빙산 녹이기
+		if (ice_cnt >= 2) {
+			cout << year;
+			return 0;
+		}
+		else if (ice_cnt == 0) {
+			cout << 0;
+			return 0;
+		}
+		else year++;
 
-			//for (int i = 0; i < N; i++) {
-			//	for (int j = 0; j < M; j++) {
-			//		cout << board[i][j] << " ";
-			//	}
-			//	cout << '\n';
-			//}
-			int ice_count = 0;
-
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < M; j++) {
-					if (!vis[i][j] && board[i][j] > 0) {
-						dfs_iceberg(board, vis, N, M,i,j); // 빙산 카운트
-						ice_count++;
-					}
-				}
-			}
-			
-			//cout << ice_count << '\n';
-
-			if (ice_count >= 2) {
-				cout << year;
-				return 0;
-			}
-			else if(ice_count == 0){
-				cout << 0;
-				return 0;
-			}
-			else {
-				year++;
-			}
-		//}
 
 	}
-
 	return 0;
 }
