@@ -17,26 +17,26 @@ int main(void) {
 	int rect = min(N, M);
 
 	// 사각형 사이즈 조절
-	while (rect--) {
-		if (rect == 0) {
+	while (1) {
+		if (rect == 1) {
 			cout << 1;
 			return 0;
 		}
 
 		// 사각형 탐색 시작 범위 조절
-		for (int i = 0; i <= N - (rect + 1); i++) {
-			for (int j = 0; j <= M - (rect + 1); j++) {
+		for (int i = 0; i <= N - rect; i++) {
+			for (int j = 0; j <= M - rect; j++) {
 				// 꼭지점 탐색
-				if (board[i][j] == board[i][j + rect] && 
-					board[i][j] == board[i + rect][j] &&
-					board[i][j] == board[i + rect][j + rect]){
+				if (board[i][j] == board[i][j + rect-1] && 
+					board[i][j] == board[i + rect-1][j] &&
+					board[i][j] == board[i + rect-1][j + rect-1]){
 
-					cout << (rect+1) * (rect+1);
+					cout << rect * rect;
 					return 0;
 				}
 			}
 		}
-		
+		rect--;
 	}
 	
 	return 0;
