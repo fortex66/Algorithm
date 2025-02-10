@@ -7,40 +7,26 @@ int main(void) {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 
-	ll n;
+	ll n, cats = 1, magic = 1;
 	cin >> n;
 
-	ll cats = 0;
-	int magic = 0;
+	if (n == 0 || n == 1) {
+		cout << n;
+		return 0;
+	}
 
-	bool first = true;
-
-	while (1) {
-		if (n == cats) {
-			cout << magic;
-			return 0;
-		}
-
-		if (first) {
-			cats++;
-			magic++;
-			first = false;
-		}
-
-		if (n == 1) {
-			cout << magic;
-			return 0;
-		}
-		
+	while (cats < n) {
 		if (cats * 2 <= n) {
 			cats *= 2;
 			magic++;
 		}
-		else if (cats * 2 > n) {
+		else {
 			cats = n;
 			magic++;
 		}
 	}
+
+	cout << magic;
 
 	return 0;
 }
