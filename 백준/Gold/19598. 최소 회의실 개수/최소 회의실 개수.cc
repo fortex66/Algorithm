@@ -12,28 +12,24 @@ int main() {
 	int N;
 	cin >> N;
 
-	vector<pair<int, int> > metting(N);
-
-	for (int i = 0; i < N; i++) {
-		cin >> metting[i].first >> metting[i].second;
-	}
-
-	// 회의 시작 시간을 기준으로 오름차순 정렬
-	sort(metting.begin(), metting.end());
-
+	vector<pair<int, int> > meeting(N);
 	priority_queue<int, vector<int>, greater<int>> pq;
 
-	// 첫 회의를 넣고 시작
-	pq.push(metting[0].second);
+	for (int i = 0; i < N; i++) {
+		cin >> meeting[i].first >> meeting[i].second;
+	}
 
-	// 회의 순회
+	sort(meeting.begin(), meeting.end());
+
+	pq.push(meeting[0].second);
+
 	for (int i = 1; i < N; i++) {
-		if (metting[i].first >= pq.top()) {
+		if (meeting[i].first >= pq.top()) {
 			pq.pop();
-			pq.push(metting[i].second);
+			pq.push(meeting[i].second);
 		}
 		else {
-			pq.push(metting[i].second);
+			pq.push(meeting[i].second);
 		}
 	}
 
