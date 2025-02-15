@@ -5,10 +5,6 @@
 
 using namespace std;
 
-bool comp(const pair<int,int>& a, const pair<int,int>& b) {
-	return a.first < b.first;
-}
-
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
@@ -23,7 +19,7 @@ int main() {
 	}
 
 	// 회의 시작 시간을 기준으로 오름차순 정렬
-	sort(metting.begin(), metting.end(), comp);
+	sort(metting.begin(), metting.end());
 
 	priority_queue<int, vector<int>, greater<int>> pq;
 
